@@ -8,12 +8,41 @@ import { InteractiveWarpGrid } from "../../components/InteractiveWarpGrid";
 import { WaitlistFeedbackDialog } from "../../components/waitlist/WaitlistFeedbackDialog";
 import { WaitlistFooter } from "../../components/waitlist/WaitlistFooter";
 import {
-  type ApiResult,
   type FeedbackStatus,
   type SubmitState,
   type UserType,
   WAITLIST_SURVEY_URL,
 } from "../../lib/waitlist/shared";
+
+const FEEDBACK_COPY = {
+  success: {
+    customer: {
+      title: "You are in",
+      message:
+        "You’re on the Hustla waitlist. We’ll let you know when access opens.",
+    },
+    provider: {
+      title: "You are in",
+      message:
+        "You’re on the Hustla waitlist. We’ll let you know when providers go live.",
+    },
+  },
+  duplicate: {
+    title: "Already on the list",
+      message:
+      "This email is already on the Hustla waitlist.",
+  },
+  serverError: {
+    title: "Something went wrong",
+    message:
+      "We couldn’t complete your signup. Try again shortly.",
+  },
+  networkError: {
+    title: "Connection issue",
+    message:
+      "Your signup didn’t go through. Check your connection and try again.",
+  },
+} satisfies Record<string, unknown>;
 
 export default function WaitlistPage() {
   const [userType, setUserType] = useState<UserType | "">("");
@@ -121,31 +150,30 @@ export default function WaitlistPage() {
         body: JSON.stringify(payload),
       });
 
-      const data = (await response.json().catch(() => ({}))) as ApiResult;
+      await response.json().catch(() => null);
 
       if (!response.ok) {
         if (response.status === 409) {
           showModal(
             "error",
-            "Email already registered",
-            data.message ?? "This email is already on the waitlist.",
+            FEEDBACK_COPY.duplicate.title,
+            FEEDBACK_COPY.duplicate.message,
           );
           return;
         }
 
         showModal(
           "error",
-          "Unable to join waitlist",
-          data.message ?? "Submission failed. Please try again in a moment.",
+          FEEDBACK_COPY.serverError.title,
+          FEEDBACK_COPY.serverError.message,
         );
         return;
       }
 
       showModal(
         "success",
-        "You are in",
-        data.message ??
-          "Successfully joined the waitlist. We will be in touch soon.",
+        FEEDBACK_COPY.success[userType].title,
+        FEEDBACK_COPY.success[userType].message,
       );
       setUserType("");
       setName("");
@@ -154,8 +182,8 @@ export default function WaitlistPage() {
     } catch {
       showModal(
         "error",
-        "Network error",
-        "Submission failed. Please try again in a moment.",
+        FEEDBACK_COPY.networkError.title,
+        FEEDBACK_COPY.networkError.message,
       );
     } finally {
       isSubmittingRef.current = false;
