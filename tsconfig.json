@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-     "baseUrl": "src",
+    "baseUrl": ".",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -20,7 +20,7 @@
       }
     ],
     "paths": {
-      "@/*": ["hustla-waitlist/src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
