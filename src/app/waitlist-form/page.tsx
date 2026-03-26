@@ -11,6 +11,7 @@ import {
   type FeedbackStatus,
   type SubmitState,
   type UserType,
+  isValidEmail,
   WAITLIST_SURVEY_URL,
 } from "../../lib/waitlist/shared";
 
@@ -128,6 +129,15 @@ export default function WaitlistPage() {
       return;
     }
 
+    if (!isValidEmail(email)) {
+      showModal(
+        "error",
+        "Invalid email",
+        "Please enter a valid email address.",
+      );
+      return;
+    }
+
     isSubmittingRef.current = true;
     setStatus("loading");
     setFeedbackOpen(false);
@@ -222,19 +232,19 @@ export default function WaitlistPage() {
 
             <div className="mt-5 rounded-2xl border border-black/8 bg-gradient-to-b from-white to-[#FAFAFA] p-2.5">
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                <span className="inline-flex items-center justify-center gap-2 rounded-xl border border-black/8 bg-white px-3.5 py-2 text-center shadow-[0_6px_16px_rgba(0,0,0,0.05)] sm:justify-start">
+                <span className="inline-flex items-center justify-center gap-2 rounded-xl border border-black/8 bg-white px-3.5 py-2 text-center shadow-[0_6px_16px_rgba(0,0,0,0.05)] sm:justify-center">
                   <span
                     aria-hidden="true"
-                    className="h-2 w-2 rounded-full bg-[#FF4F00]"
+                    className="h-2 w-2 rounded-full bg-[#F97316]"
                   />
                   <span className="[font-family:var(--font-inter)] text-xs font-semibold tracking-[-0.01em] text-[#111111] sm:text-sm">
                     Find professionals
                   </span>
                 </span>
-                <span className="inline-flex items-center justify-center gap-2 rounded-xl border border-black/8 bg-white px-3.5 py-2 text-center shadow-[0_6px_16px_rgba(0,0,0,0.05)] sm:justify-start">
+                <span className="inline-flex items-center justify-center gap-2 rounded-xl border border-black/8 bg-white px-3.5 py-2 text-center shadow-[0_6px_16px_rgba(0,0,0,0.05)] sm:justify-center">
                   <span
                     aria-hidden="true"
-                    className="h-2 w-2 rounded-full bg-[#FF4F00]"
+                    className="h-2 w-2 rounded-full bg-[#F97316]"
                   />
                   <span className="[font-family:var(--font-inter)] text-xs font-semibold tracking-[-0.01em] text-[#111111] sm:text-sm">
                     Be a professional
@@ -263,7 +273,7 @@ export default function WaitlistPage() {
                       setUserType(event.target.value as UserType)
                     }
                     onKeyDown={handleFieldKeyDown}
-                    className="h-12 w-full appearance-none rounded-lg border border-black/10 bg-[#F6F6F6] px-4 pr-14 [font-family:var(--font-inter)] text-[15px] font-medium text-[#111111] outline-none transition focus:border-[#FF4F00]/55 focus:ring-2 focus:ring-[#FF4F00]/20"
+                    className="h-12 w-full appearance-none rounded-lg border border-black/10 bg-[#F6F6F6] px-4 pr-14 [font-family:var(--font-inter)] text-[15px] font-medium text-[#111111] outline-none transition focus:border-[#F97316]/55 focus:ring-2 focus:ring-[#F97316]/20"
                   >
                     <option value="" disabled>
                       Select user type
@@ -293,7 +303,7 @@ export default function WaitlistPage() {
                   onChange={(event) => setName(event.target.value)}
                   onKeyDown={handleFieldKeyDown}
                   placeholder="Jane Smith"
-                  className="h-12 w-full rounded-lg border border-black/10 bg-[#F6F6F6] px-4 [font-family:var(--font-inter)] text-[15px] font-medium text-[#111111] outline-none transition focus:border-[#FF4F00]/55 focus:ring-2 focus:ring-[#FF4F00]/20"
+                  className="h-12 w-full rounded-lg border border-black/10 bg-[#F6F6F6] px-4 [font-family:var(--font-inter)] text-[15px] font-medium text-[#111111] outline-none transition focus:border-[#F97316]/55 focus:ring-2 focus:ring-[#F97316]/20"
                 />
               </div>
 
@@ -315,7 +325,7 @@ export default function WaitlistPage() {
                   onChange={(event) => setEmail(event.target.value)}
                   onKeyDown={handleFieldKeyDown}
                   placeholder="jane@example.com"
-                  className="h-12 w-full rounded-lg border border-black/10 bg-[#F6F6F6] px-4 [font-family:var(--font-inter)] text-[15px] font-medium text-[#111111] outline-none transition focus:border-[#FF4F00]/55 focus:ring-2 focus:ring-[#FF4F00]/20"
+                  className="h-12 w-full rounded-lg border border-black/10 bg-[#F6F6F6] px-4 [font-family:var(--font-inter)] text-[15px] font-medium text-[#111111] outline-none transition focus:border-[#F97316]/55 focus:ring-2 focus:ring-[#F97316]/20"
                 />
               </div>
 
@@ -338,7 +348,7 @@ export default function WaitlistPage() {
                 type="button"
                 onClick={() => void handleSubmit()}
                 disabled={status === "loading"}
-                className="relative z-30 mt-2 inline-flex h-12 w-full items-center justify-center rounded-lg bg-[#FF4F00] [font-family:var(--font-inter)] text-base font-bold text-white shadow-[0_8px_20px_rgba(255,79,0,0.2)] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(255,79,0,0.24)] active:bg-black disabled:cursor-not-allowed disabled:opacity-70"
+                className="relative z-30 mt-2 inline-flex h-12 w-full items-center justify-center rounded-lg bg-[#F97316] [font-family:var(--font-inter)] text-base font-bold text-white shadow-[0_8px_20px_rgba(249,115,22,0.2)] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(249,115,22,0.24)] active:bg-black disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {status === "loading" ? "Submitting..." : "Submit"}
               </button>

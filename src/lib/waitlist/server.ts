@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
-import type { FeedbackStatus, UserType } from "./shared";
+import { isValidEmail, type FeedbackStatus, type UserType } from "./shared";
 
 const DEFAULT_WAITLIST_API_URL = "https://backside.hustla.live/api/v1/waitlist";
 const REQUEST_TIMEOUT_MS = 10_000;
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 12;
 const MAX_BODY_BYTES = 8_192;
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 type RateLimitEntry = {
   count: number;
   resetAt: number;
@@ -196,7 +194,7 @@ export function parseWaitlistBody(body: unknown): ParsedWaitlistBody {
     };
   }
 
-  if (!EMAIL_REGEX.test(email)) {
+  if (!isValidEmail(email)) {
     return {
       ok: false,
       status: 400,

@@ -8,3 +8,9 @@ export type ApiResult = {
 
 export const WAITLIST_SURVEY_URL =
   "https://form.jotform.com/260477142096055";
+
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export function isValidEmail(email: string) {
+  return EMAIL_REGEX.test(email.trim().toLowerCase());
+}
