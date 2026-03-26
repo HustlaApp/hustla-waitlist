@@ -19,12 +19,12 @@ const FEEDBACK_COPY = {
     customer: {
       title: "You are in",
       message:
-        "You’re on the Hustla waitlist. We’ll let you know when access opens.",
+        "You’re on the Hustla waitlist. We’ll let you know when we go live.",
     },
     provider: {
       title: "You are in",
       message:
-        "You’re on the Hustla waitlist. We’ll let you know when providers go live.",
+        "You’re on the Hustla waitlist. We’ll let you know when we go live.",
     },
   },
   duplicate: {
@@ -228,7 +228,7 @@ export default function WaitlistPage() {
                     className="h-2 w-2 rounded-full bg-[#FF4F00]"
                   />
                   <span className="[font-family:var(--font-inter)] text-xs font-semibold tracking-[-0.01em] text-[#111111] sm:text-sm">
-                    Find workers
+                    Find professionals
                   </span>
                 </span>
                 <span className="inline-flex items-center justify-center gap-2 rounded-xl border border-black/8 bg-white px-3.5 py-2 text-center shadow-[0_6px_16px_rgba(0,0,0,0.05)] sm:justify-start">
@@ -237,7 +237,7 @@ export default function WaitlistPage() {
                     className="h-2 w-2 rounded-full bg-[#FF4F00]"
                   />
                   <span className="[font-family:var(--font-inter)] text-xs font-semibold tracking-[-0.01em] text-[#111111] sm:text-sm">
-                    Get found for your work
+                    Be a professional
                   </span>
                 </span>
               </div>

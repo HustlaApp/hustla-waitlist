@@ -31,7 +31,7 @@ export default function Home() {
           <Link
             href="/waitlist-form"
             prefetch={false}
-            className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#FF4F00] px-9 py-3 [font-family:var(--font-inter-tight)] text-[14px] font-semibold text-white shadow-[0_8px_20px_rgba(255,79,0,0.2)] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(255,79,0,0.24)] sm:mt-9"
+            className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#F97316] px-9 py-3 [font-family:var(--font-inter-tight)] text-[14px] font-semibold text-white shadow-[0_8px_20px_rgba(249,115,22,0.2)] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(249,115,22,0.24)] sm:mt-9"
           >
             Join Our Waitlist
           </Link>
