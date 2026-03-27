@@ -4,7 +4,6 @@ import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaChevronDown } from "react-icons/fa6";
-import { InteractiveWarpGrid } from "../../components/InteractiveWarpGrid";
 import { WaitlistFeedbackDialog } from "../../components/waitlist/WaitlistFeedbackDialog";
 import { WaitlistFooter } from "../../components/waitlist/WaitlistFooter";
 import {
@@ -202,10 +201,6 @@ export default function WaitlistPage() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#FFFFFF]">
-      <div className="hidden sm:block">
-        <InteractiveWarpGrid />
-      </div>
-
       <header className="absolute left-1/2 top-6 z-20 -translate-x-1/2 sm:top-7">
         <Link href="/" aria-label="Go to homepage">
           <Image
