@@ -1,11 +1,15 @@
 "use client";
 
-import { FaCircleCheck, FaTriangleExclamation } from "react-icons/fa6";
-import type { FeedbackStatus } from "../../lib/waitlist/shared";
+import {
+  FaCircleCheck,
+  FaSpinner,
+  FaTriangleExclamation,
+} from "react-icons/fa6";
+import type { SubmitState } from "../../lib/waitlist/shared";
 
 type WaitlistFeedbackDialogProps = {
   open: boolean;
-  status: FeedbackStatus;
+  status: SubmitState;
   title: string;
   message: string;
   onClose: () => void;
@@ -22,6 +26,9 @@ export function WaitlistFeedbackDialog({
     return null;
   }
 
+  const isLoading = status === "loading";
+  const isSuccess = status === "success";
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-5">
       <div
@@ -36,12 +43,14 @@ export function WaitlistFeedbackDialog({
       >
         <div
           className={`mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-black/10 ${
-            status === "success"
+            isLoading || isSuccess
               ? "bg-[#111111] text-white"
               : "bg-white text-[#111111]"
           }`}
         >
-          {status === "success" ? (
+          {isLoading ? (
+            <FaSpinner className="animate-spin text-[18px]" aria-hidden="true" />
+          ) : isSuccess ? (
             <FaCircleCheck className="text-[18px]" aria-hidden="true" />
           ) : (
             <FaTriangleExclamation className="text-[18px]" aria-hidden="true" />
@@ -56,16 +65,24 @@ export function WaitlistFeedbackDialog({
         <p className="mt-3 [font-family:var(--font-inter)] text-sm font-medium leading-relaxed text-[#666666] sm:text-[15px]">
           {message}
         </p>
-        <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-black/8">
-          <div className="h-full w-full origin-left animate-modal-progress rounded-full bg-[#111111]" />
-        </div>
-        <button
-          type="button"
-          onClick={onClose}
-          className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-lg bg-[#111111] [font-family:var(--font-inter)] text-sm font-semibold text-white transition hover:bg-black"
-        >
-          Close
-        </button>
+        {isLoading ? (
+          <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-black/8">
+            <div className="h-full w-2/5 animate-pulse rounded-full bg-[#111111]" />
+          </div>
+        ) : (
+          <>
+            <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-black/8">
+              <div className="h-full w-full origin-left animate-modal-progress rounded-full bg-[#111111]" />
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="mt-6 inline-flex h-11 w-full items-center justify-center rounded-lg bg-[#111111] [font-family:var(--font-inter)] text-sm font-semibold text-white transition hover:bg-black"
+            >
+              Close
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

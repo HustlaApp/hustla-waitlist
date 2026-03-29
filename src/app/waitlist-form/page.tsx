@@ -7,7 +7,6 @@ import { FaChevronDown } from "react-icons/fa6";
 import { WaitlistFeedbackDialog } from "../../components/waitlist/WaitlistFeedbackDialog";
 import { WaitlistFooter } from "../../components/waitlist/WaitlistFooter";
 import {
-  type FeedbackStatus,
   type SubmitState,
   type UserType,
   isValidEmail,
@@ -45,6 +44,10 @@ const FEEDBACK_COPY = {
 } satisfies Record<string, unknown>;
 
 export default function WaitlistPage() {
+  const loadingCopy = {
+    title: "Joining waitlist",
+    message: "Hold on a sec while we save your spot.",
+  };
   const [userType, setUserType] = useState<UserType | "">("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -56,7 +59,7 @@ export default function WaitlistPage() {
   const isSubmittingRef = useRef(false);
 
   useEffect(() => {
-    if (!feedbackOpen) {
+    if (!feedbackOpen || status === "loading") {
       return;
     }
 
@@ -71,10 +74,10 @@ export default function WaitlistPage() {
       document.body.style.overflow = previousOverflow;
       window.clearTimeout(timeoutId);
     };
-  }, [feedbackOpen]);
+  }, [feedbackOpen, status]);
 
   const showModal = (
-    nextStatus: FeedbackStatus,
+    nextStatus: SubmitState,
     title: string,
     message: string,
   ) => {
@@ -139,7 +142,9 @@ export default function WaitlistPage() {
 
     isSubmittingRef.current = true;
     setStatus("loading");
-    setFeedbackOpen(false);
+    setModalTitle(loadingCopy.title);
+    setModalMessage(loadingCopy.message);
+    setFeedbackOpen(true);
 
     try {
       const payload = {
@@ -364,7 +369,7 @@ export default function WaitlistPage() {
 
       <WaitlistFeedbackDialog
         open={feedbackOpen}
-        status={status === "success" ? "success" : "error"}
+        status={status}
         title={modalTitle}
         message={modalMessage}
         onClose={() => setFeedbackOpen(false)}

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { isValidEmail, type FeedbackStatus, type UserType } from "./shared";
 
-const DEFAULT_WAITLIST_API_URL = "https://backside.hustla.live/api/v1/waitlist";
 const REQUEST_TIMEOUT_MS = 10_000;
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 12;
@@ -45,8 +44,8 @@ export function jsonResponse(
   });
 }
 
-export function getWaitlistApiUrl(): string {
-  return process.env.WAITLIST_API_URL ?? DEFAULT_WAITLIST_API_URL;
+export function getWaitlistApiUrl(): string | null {
+  return process.env.WAITLIST_API_URL?.trim() || null;
 }
 
 export function getRequestTimeoutMs(): number {

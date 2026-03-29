@@ -12,6 +12,14 @@ import {
 
 export async function POST(request: Request) {
   try {
+    const waitlistApiUrl = getWaitlistApiUrl();
+    if (!waitlistApiUrl) {
+      return jsonResponse(
+        { message: "Waitlist service is not configured." },
+        { status: 500 },
+      );
+    }
+
     if (!isAllowedOrigin(request)) {
       return jsonResponse({ message: "Invalid origin." }, { status: 403 });
     }
@@ -66,7 +74,7 @@ export async function POST(request: Request) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), getRequestTimeoutMs());
 
-    const response = await fetch(getWaitlistApiUrl(), {
+    const response = await fetch(waitlistApiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
